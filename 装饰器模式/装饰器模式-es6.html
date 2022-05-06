@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>单例模式弹框</title>
+</head>
+<style>
+  #modal {
+    height: 200px;
+    width: 200px;
+    line-height: 200px;
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    border: 1px solid black;
+    text-align: center;
+  }
+</style>
+
+<body>
+  <button id='open'>打开弹框</button>
+  <button id='close'>关闭弹框</button>
+</body>
+<script>
+  const Modal = (function () {
+    let modal = null
+    return function () {
+      if (!modal) {
+        modal = document.createElement('div')
+        modal.innerHTML = `全局唯一modal`
+        modal.id = 'modal'
+        modal.style.display = 'none'
+        document.body.appendChild(modal)
+      }
+      return modal
+    }
+  })()
+  document.getElementById('close').addEventListener('click', function () {
+    const modal = new Modal()
+    if (modal) {
+      modal.style.display = 'none'
+    }
+  })
+  class OpenBtn {
+    show() {
+      const modal = new Modal()
+      modal.style.display = 'block'
+    }
+  }
+  class Decorator {
+    constructor(open_btn) {
+      this.open_btn = open_btn
+    }
+    onClick() {
+      this.open_btn.show()
+      this.changeBtnStatus()
+    }
+    changeBtnStatus(){
+      this.disabledBtn()
+      this.changeBtnText()
+    }
+    disabledBtn() {
+      const btn = document.getElementById('open')
+      btn.setAttribute("disabled", true)
+    }
+    changeBtnText() {
+      const btn = document.getElementById('modal')
+      btn.innerText = '快去登录'
+    }
+  }
+  const openButton = new OpenBtn()
+  const decorator = new Decorator(openButton)
+  document.getElementById('open').addEventListener('click', function () {
+    decorator.onClick()
+  })
+</script>

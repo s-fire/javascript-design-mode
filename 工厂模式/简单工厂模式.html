@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+
+</html>
+<script>
+  // function Code(name, age) {
+  //   this.name = name
+  //   this.age = age
+  //   this.career = 'Coder'
+  //   this.work = ['code']
+  // }
+  // function ProducrtManager(name, age) {
+  //   this.name = name
+  //   this.age = age
+  //   this.career = 'Product'
+  //   this.work = ['manage']
+  // }
+  // function Factory(name,age,career) {
+  //   switch (career) {
+  //     case 'coder':
+  //       return new Code(name,age)
+  //       break;
+  //     case 'manager':
+  //       return new ProducrtManager(name,age)
+  //       break
+  //     default:
+  //       break;
+  //   }
+  // }
+  // const coder = Factory('张三',25,'coder')
+  // console.log(coder);
+
+
+  function User(name, age,career,work) {
+    this.name = name
+    this.age = age
+    this.career = career
+    this.work = work
+  }
+  function Factory(name,age,career) {
+    let work
+    switch (career) {
+      case 'coder':
+        work = ['code']
+        return new User(name,age,career,work)
+        break;
+      case 'manager':
+        work = ['manager']
+        return new User(name,age,career,work)
+        break
+      default:
+        break;
+    }
+  }
+  const coder = Factory('张三',25,'manager')
+  console.log(coder);
+</script>

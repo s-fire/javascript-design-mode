@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+<body>
+  
+</body>
+</html>
+<script>
+
+  class MobilePhoneFactory{
+    createOs(){
+      throw new Error(`抽象工厂方法不允许直接调用，你需要将我重写！`)
+    }
+    createHardWare(){
+      throw new Error("抽象工厂方法不允许直接调用，你需要将我重写！");
+    }
+  }
+  /* 
+  楼上这个类，除了约定手机流水线的通用能力之外，啥也不干。如果你尝试让它干点啥，
+  比如 new 一个 MobilePhoneFactory 实例，并尝试调用它的实例方法。它还会给你报错，
+  提醒你“我不是让你拿去new一个实例的，我就是个定规矩的”。在抽象工厂模式里，
+  楼上这个类就是我们食物链顶端最大的 Boss——AbstractFactory（抽象工厂）。
+  */
+  class FakeStarFactory extends MobilePhoneFactory {
+    createOs(){
+      // 提供安卓系统实例
+      return new AndroidOS()
+    }
+    createHardWare(){
+       // 提供高通硬件实例
+       return new HuaWeiHardWare()
+    }
+  }
+  // os 抽象工厂
+  class Os{
+    controlHardWare() {
+        throw new Error('抽象产品方法不允许直接调用，你需要将我重写！');
+    }
+  }
+  // os 具体工厂
+  class AndroidOS extends Os {
+    controlHardWare(){
+      console.log(`我会用安卓的方式去操作硬件`);
+    }
+  }
+   // os 具体工厂
+  class appleOs {
+    controlHardWare(){
+      console.log(`我会用苹果的方式去操作硬件`);
+    }
+  }
+
+  // HardWare抽象工厂
+  class HardWare{
+    operateByOrder(){
+      throw new Error (`抽象产品方法不允许直接调用，你需要将我重写！`)
+    }
+  }
+
+  class HuaWeiHardWare extends HardWare{
+    operateByOrder(){
+      console.log('我会用华为的方式去运转');
+    }
+  }
+  class MiWare extends HardWare {
+    operateByOrder(){
+      console.log('我会用小米的方式去运转');
+    }
+  }
+  const myPhone = new FakeStarFactory()
+  const myOS= myPhone.createOs()
+  const myHardWare = myPhone.createHardWare()
+  myOS.controlHardWare()
+  myHardWare.operateByOrder()
+</script>
